@@ -10,9 +10,26 @@
     {% if context %}
         <script>alert('标题或内容不能为空')</script>
     {% endif %}
-    <form class="i-blog" method="post">
-        <input type="text" name="title" placeholder="请输入标题">
-        <input type="text" name="body" placeholder="请输入内容">
-        <button type="submit" name="submit" onclick="publishing('allen')">发布</button>
+
+    <form action="/article/" method="post">
+        <table>
+            <tbody>
+                <tr>
+                    <td>标题：
+                        <input type="text" name="title" placeholder="请输入标题">
+                    </td>
+                </tr>
+                 <tr>
+                    <td>内容：
+                        <input type="text" name="body" placeholder="请输入内容">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" name="submit" onclick="publishing('allen')">发布</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </form>
 {% endblock %}

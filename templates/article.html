@@ -8,21 +8,22 @@
         <thead>
             <th>标题</th>
             <th>博客体</th>
-            <th>作者</th>
         </thead>
         <tbody>
             {% for foo in result %}
                 <tr>
-                    <td>{{ foo.title }}</td>
-                    <td>{{ foo.content }}</td>
+                    <td>标题：{{ foo.title }}</td>
+                </tr>
+                <tr>
+                    <td>内容：{{ foo.content }}</td>
+                </tr>
+                <tr>
+                    <a methods="get" role="button" href="{{ url_for('comment',id=foo.id) }}">评论</a>
                 </tr>
          {% endfor %}
         </tbody>
     </table>
-    <form class="i-comment" method="post">
-        <input type="text" name="comment" placeholder="请输入评论内容">
-        <a  name="submit" onclick="publishing('allen')" href="url_for('comment')">评论</a>
-    </form>
+
 {#        <p>总条数：{{ context|length }}</p>#}
 {#    <ul>#}
 {#        {% for k in context %}#}

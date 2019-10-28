@@ -1,7 +1,7 @@
 from flask import Flask,render_template,url_for,request,redirect,session,g
 import config
 import os
-from  models.article import Article
+from  models.article import Article,User,ArticleComment
 from etcs import db
 from datetime import timedelta
 from utils import isLogin
@@ -17,9 +17,6 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    #session操作
-    session['userName'] = 'allen'
-    session.permanent = True
     #增加
     # article1 = Article(article_name='天龙八部',author='金庸',price=None)
     # db.session.add(article1)
@@ -44,41 +41,56 @@ def index():
 @app.route('/add_article',methods=['POST','GET'])
 def add_article():
     context = {}
-    if request.method =='POST':
-        title = request.form.get('title')
-        body = request.form.get('body')
-        author = request.form.get('author')
-        if title == ''or body=='':
-            context['msg'] = '标题或内容不能为空'
-            return render_template('addArticle.html',context = context)
-        else:
-            blog = Article(title = title,content = body)
-            try:
-                db.session.add(blog)
-                db.session.commit()
-            except:
-                context['msg'] = '入库失败'
-                return render_template('addArticle.html',context=context)
-            return redirect(url_for('article'))
+    if g.user:
+        if request.method =='POST':
+            title = request.form.get('title')
+            body = request.form.get('body')
+            author = request.form.get('author')
+            if title == ''or body=='':
+                context['msg'] = '标题或内容不能为空'
+                return render_template('addArticle.html',context = context)
+            else:
+                blog = Article(title = title,content = body)
+                try:
+                    db.session.add(blog)
+                    db.session.commit()
+                except:
+                    context['msg'] = '入库失败'
+                    return render_template('addArticle.html',context=context)
+                return redirect(url_for('article'))
 
+        else:
+            return render_template('addArticle.html',context=context)
     else:
-        return render_template('addArticle.html',context=context)
+            return render_template('login.html')
 
 @app.route('/article/')
 def article():
-        userName = session.get("userName")
-        if userName == 'llj':
+        if g.user:
             result = Article.query.all()
-            result = Article.query.all()
-            print(session.get('userName'))
-            # session.pop()
-            # session.clear
             return render_template('article.html',result = result)
         else:
             context = {}
             context['value']='请先登录'
             return render_template('login.html',context=context)
 
+@app.route('/comment/<id>',methods=['GET','POST'])
+def comment(id):
+    if g.user:
+        if request.method=='GET':
+            return render_template('comment.html')
+        else:
+            content = request.form.get('content')
+            userId = g.user.id
+            comment = ArticleComment(comment=content,user_id=userId,article_id=id)
+            print(comment)
+            db.session.add(comment)
+            db.session.commit()
+            return 'success'
+    else:
+        context = {}
+        context['value'] = '请先登录'
+        return render_template('login.html', context=context)
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -93,16 +105,29 @@ def login():
             context['err']=err
             print(context)
             return render_template('login.html',**context)
-        elif req_name == 'llj' and req_pwd=='123456':
-            session['userName']=req_name
-            return redirect(url_for('article'))
         else:
-            err = True
-            context['msg'] = '账号和密码不匹配'
-            context['err'] = err
-            return render_template('login.html',**context)
+            user = User.query.filter(User.loginName == req_name).first()
+            if user.loginName == req_name and user.password == req_pwd:
+                session['userName'] = user.loginName
+                session.permanent = True
+                return redirect(url_for('article'))
+            else:
+                err = True
+                return render_template('login.html',err = err)
     else:
         return render_template('login.html')
+
+@app.before_request
+def is_login():
+    userName = session.get('userName')
+    user = User.query.filter(User.loginName==userName).first()
+    g.user = user
+    if g.user:
+        print("不为空")
+    else:
+        print("为空")
+
+
 
 @app.route('/logout/',methods=['GET','POST'])
 def logout():

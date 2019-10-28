@@ -31,6 +31,7 @@ class ArticleComment(db.Model):
     article_id = db.Column(db.INTEGER,db.ForeignKey('article.id'),nullable=True)
     comment = db.Column(db.String(1000),nullable=True)
 
-
-    def __init__(self,comment,body,author):
+    def __init__(self,comment,user_id,article_id):
         self.comment = comment
+        self.user_id = user_id
+        self.article_id=article_id
