@@ -1,0 +1,9 @@
+  .nav{
+            line-height: 65px;
+            background-color: #444444;
+        }
+  .nav a{
+            padding: 0 10px;
+            list-style: none;
+            color: white;
+        }

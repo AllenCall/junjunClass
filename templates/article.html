@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+    文章
+{% endblock %}
+{% block index %}
+{#    {{ super() }}#}
+    <table>
+        <thead>
+            <th>标题</th>
+            <th>博客体</th>
+            <th>作者</th>
+        </thead>
+        <tbody>
+            {% for foo in result %}
+                <tr>
+                    <td>{{ foo.title }}</td>
+                    <td>{{ foo.content }}</td>
+                </tr>
+         {% endfor %}
+        </tbody>
+    </table>
+    <form class="i-comment" method="post">
+        <input type="text" name="comment" placeholder="请输入评论内容">
+        <a  name="submit" onclick="publishing('allen')" href="url_for('comment')">评论</a>
+    </form>
+{#        <p>总条数：{{ context|length }}</p>#}
+{#    <ul>#}
+{#        {% for k in context %}#}
+{#            <li>#}
+{#                <a href='#' style="color: #9C1A1C">{{ k.name }}</a>#}
+{#                <p>{{ k.author }}</p>#}
+{#            </li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#    <img src={{ a|default('http://192.168.74.163/lib/images/smileys/icon_forward.bmp') }}>#}
+
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+登录
+{% endblock %}
+{% block index %}
+        {% if  err  %}
+            <script>alert( "账号密码错误！" )</script>
+        {% endif %}
+        {% if context %}
+            <span>{{ context.value }}</span>
+        {% endif %}
+        <form action="/login/" name="登录页面" method="post"  style="text-align: center">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>用户名：
+                            <input type="text" name="username"  placeholder="请输入用户名">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>密  码：
+                            <input type="text" name="password"  placeholder="请输入密码">
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            <button type="submit" value="提交"></button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}

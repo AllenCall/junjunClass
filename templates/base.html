@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+{% block static %}
+    <link rel="stylesheet" href="{{ url_for('static',filename = 'css/base.css') }}">
+    <script src="{{ url_for('static',filename = 'js/base.js') }}"></script>
+{% endblock %}
+</head>
+<body>
+   <div class="nav">
+        <ul>
+            <li>
+                <a class="home" href="{{ url_for('index') }}">首页</a>
+                <a class="write" href="{{ url_for('add_article') }}">发博客</a>
+                <a class="blog" href='{{ url_for('article') }}'>博客</a>
+                <a class="login" href={{ url_for('login') }}>登录</a>
+                <a class="login" href={{ url_for('logout') }}>退出登录</a>
+            </li>
+        </ul>
+    </div>
+{#   <img src="{{ url_for('static',filename = 'images/kk.jpg') }}">#}
+{% block index %}
+{% endblock %}
+</body>
+</html>
