@@ -1,9 +1,16 @@
-  .nav{
-            line-height: 65px;
-            background-color: #444444;
-        }
-  .nav a{
-            padding: 0 10px;
-            list-style: none;
-            color: white;
-        }
+.logo{
+    width: 100px;
+}
+body{
+    background: #f3f3f3;
+}
+.main{
+    background: #fff;
+    width: 730px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 10px;
+}
+.page-title{
+    text-align: center;
+}

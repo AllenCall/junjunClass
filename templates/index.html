@@ -1,31 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>首页aaa</title>
-    <style>
-        .nav{
-            line-height: 65px;
-            background-color: #86989B;
-        }
-        ul li{
-            padding: 0 10px;
-        }
-        ul li a{
-            padding: 0 10px;
-            list-style: none;
-            color: #fafafa;
-        }
-    </style>
-</head>
-<body>
-    <div class="nav">
-        <ul>
-            <li>
-                <a href="#">首页</a>
-                <a href="#">发布</a>
-            </li>
-        </ul>
+{% extends 'base.html' %}
+{% block title %}
+    首页
+{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename = 'css/index.css') }}">
+{% endblock %}
+{% block main %}
+    <div class="list">
+    <ul>
+    {% for question in questions %}
+        <li>
+            <div class="avatar-group">
+                <img  class="avatar" src="{{ url_for('static',filename = 'images/kk.jpg') }}" alt="">
+            </div>
+            <div class="question-group">
+                <p class="question-title"><a href="#" name="title">{{ question.title }}</a></p>
+                <p class="question-content">{{ question.content }}</p>
+                <div class="question-info">
+                    <span class="question-author">{{ question.author.username }}</span>
+                    <span class="question-time">{{ question.creat_time }}</span>
+                </div>
+            </div>
+        </li>
+
+    {% endfor %}
+    </ul>
     </div>
-</body>
-</html>
+
+{#<table class="table table-striped">#}
+{#    <thead>#}
+{#        <tr>#}
+{#          <th>head1</th>#}
+{#          <th>head2</th>#}
+{#        </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#        <tr>#}
+{#          <td>123</td>#}
+{#          <td>123</td>#}
+{#        </tr>#}
+{#    </tbody>#}
+{#</table>#}
+{% endblock %}

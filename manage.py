@@ -1,8 +1,9 @@
 from flask_script import Manager
 from app import app
 from flask_migrate import Migrate,MigrateCommand
-from etcs import db
-from  models import article
+from exts import db
+from  models.User import User
+from  models.Question import Question
 
 manager = Manager(app)
 #1. 要使用flask_migrate，必须绑定app和db
