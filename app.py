@@ -22,6 +22,7 @@ def index():
 
 @app.route('/search/',methods=['GET','POST'])
 def search():
+    print('hello')
     key_word = request.form.get('key_word')
     print(key_word)
     questions = Question.query.filter(or_(Question.content.like('%'+key_word+'%'),Question.title.like('%'+key_word+'%'))).all()
